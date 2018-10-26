@@ -1,0 +1,7 @@
+{
+  "name": "ReciclARTE WebServer",
+  "description": "Servidor ReciclARTE.",
+  "website": "http://reciclarte-webserver.io/",
+  "success_url": "/index.html",
+  "addons": [ "heroku-postgresql" ]
+}
