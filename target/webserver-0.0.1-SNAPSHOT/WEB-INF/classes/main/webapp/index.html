@@ -55,21 +55,23 @@
 				role="tabpanel" aria-labelledby="puntosTab">
 				<div class="row my-4">
 					<div class="col-3">
-						<form>
+						<form id="formBuscarUsuario">
 							<fieldset class="form-group">
 								<label for="txtId">Identificación</label> <input type="text"
-									id="txtId" class="form-control" />
+									id="txtId" class="form-control" required autofocus="autofocus"/>
 							</fieldset>
-							<input type="submit" class="btn btn-success" value="Consultar" />
+							<input type="submit" class="btn btn-success" value="Consultar"/>
 						</form>
 					</div>
 					<div class="col-2"></div>
 					<div class="col-7">
-						<table id="tabla" class="table">
+						<table id="tablaDatosUsuario" class="table">
 							<caption>Datos de usuario</caption>
 							<thead class="thead-light">
 								<tr>
-									<th scope="col">Nombre</th>
+									<th scope="col">Nombres</th>
+									<th scope="col">Apellidos</th>
+									<th scope="col">Nick</th>
 									<th scope="col">Barrio</th>
 									<th scope="col">Puntuación</th>
 								</tr>
@@ -78,6 +80,47 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
+				<hr>
+				<div class="row my-4">
+					<div class="col-3"></div>
+					<div class="col-3">
+						<div id="containerFormAP">
+						<form id="formActualizarPuntuacion">							
+							<fieldset class="form-group">
+								<legend>Actualizar puntuación</legend>
+								<div role="alert">
+									<span id="resultado"></span>
+								</div>
+								<label for="selectMaterial">Material:</label>
+								<select id="selectMaterial" name="material" class="form-control">
+									<option value="1">Papel</option>
+									<option value="2">Vidrio</option>
+									<option value="3">Textil</option>
+									<option value="4">Metal</option>
+									<option value="5">Plástico</option>
+								</select>
+								<label for="spinnerPeso">Peso:</label>
+								<input id="spinnerPeso" name="peso" type="number" class="form-control" min="1000" step=".01"/>
+							</fieldset>
+							<input type="submit" class="btn btn-success" />
+						</form>
+						</div>
+					</div>
+					<div class="col-4">
+						<table id="tablaRegistroPuntos" class="table">
+							<caption>Registro de puntos</caption>
+							<thead class="thread-light">
+								<tr>
+									<th scope="col">Material</th>
+									<th scope="col">Peso</th>
+								</tr>	
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-2"></div>
 				</div>
 			</div>
 			<div id="tabPuntosRecoleccion" class="tab-pane fade" role="tabpanel"

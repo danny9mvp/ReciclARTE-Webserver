@@ -19,6 +19,12 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/jquery.toast.min.css" />
 <script src="./js/jquery.toast.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
 <link rel="stylesheet"
 	href="https://openlayers.org/en/v5.2.0/css/ol.css" type="text/css">
 <style>
@@ -31,7 +37,7 @@
 </head>
 <body>
 	<script
-	src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
+		src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
 	<div class="container">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a id="puntosTab" class="nav-link active"
@@ -55,21 +61,23 @@
 				role="tabpanel" aria-labelledby="puntosTab">
 				<div class="row my-4">
 					<div class="col-3">
-						<form>
+						<form id="formBuscarUsuario">
 							<fieldset class="form-group">
 								<label for="txtId">Identificación</label> <input type="text"
-									id="txtId" class="form-control" />
+									id="txtId" class="form-control" required autofocus="autofocus" />
 							</fieldset>
 							<input type="submit" class="btn btn-success" value="Consultar" />
 						</form>
 					</div>
 					<div class="col-2"></div>
 					<div class="col-7">
-						<table id="tabla" class="table">
+						<table id="tablaDatosUsuario" class="table">
 							<caption>Datos de usuario</caption>
 							<thead class="thead-light">
 								<tr>
-									<th scope="col">Nombre</th>
+									<th scope="col">Nombres</th>
+									<th scope="col">Apellidos</th>
+									<th scope="col">Nick</th>
 									<th scope="col">Barrio</th>
 									<th scope="col">Puntuación</th>
 								</tr>
@@ -79,12 +87,63 @@
 						</table>
 					</div>
 				</div>
+				<hr>
+				<div class="row my-4">
+					<div class="col-2"></div>
+					<div class="col-3">
+						<div id="containerFormAP">
+							<form id="formActualizarPuntuacion">
+								<fieldset class="form-group">
+									<legend>Actualizar puntuación</legend>
+									<div role="alert">
+										<span id="resultado"></span>
+									</div>
+									<label for="selectMaterial">Material:</label> <select
+										id="selectMaterial" name="material" class="form-control">
+										<option value="1">Papel</option>
+										<option value="2">Vidrio</option>
+										<option value="3">Textil</option>
+										<option value="4">Metal</option>
+										<option value="5">Plástico</option>
+									</select> <label for="spinnerPeso">Peso:</label> <input id="spinnerPeso"
+										name="peso" type="number" class="form-control" min="1000"
+										step=".01" /> <label for="selectPuntoRec">Punto de
+										recolección</label> <select id="selectPuntoRec" name="puntorec"
+										class="form-control">
+										<option value="1">Save the world</option>
+										<option value="2">Im yours</option>
+										<option value="3">Enga y reciclamos</option>
+									</select>
+								</fieldset>
+								<input type="submit" class="btn btn-success" />
+							</form>
+						</div>
+					</div>
+					<div class="col-5">
+						<table id="tablaRegistroPuntos" class="table table-striped">
+							<caption>Registro de puntos</caption>
+							<thead class="thread-light">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Material</th>
+									<th scope="col">Peso</th>
+									<th scope="col">Puntos obtenidos</th>
+									<th scope="col">Fecha de medición</th>
+									<th scope="col">Punto de recolección</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-2"></div>
+				</div>
 			</div>
 			<div id="tabPuntosRecoleccion" class="tab-pane fade" role="tabpanel"
 				aria-labelledby="puntosRecoleccionTab">
 				<div class="row my-4">
 					<h2>Puntos de recolección</h2>
-					<div id="map" class="map"></div>				
+					<div id="map" class="map"></div>
 				</div>
 			</div>
 			<div id="tabRutasAseo" class="tab-pane fade" role="tabpanel"
