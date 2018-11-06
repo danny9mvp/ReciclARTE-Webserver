@@ -23,10 +23,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.entities.Barrio;
 import com.entities.Material;
 import com.entities.MaterialRecolectado;
 import com.entities.PuntoRecoleccion;
@@ -35,7 +37,9 @@ import com.entities.RankingPuntos;
 import com.entities.TipoMaterial;
 import com.entities.Usuario;
 import com.entities.UsuarioPK;
+import com.util.jsonpojos.RequestLogin;
 import com.util.jsonpojos.RequestPuntaje;
+import com.util.jsonpojos.RequestSignIn;
 
 @Path("/usuarios")
 public class UsuarioService {
@@ -149,12 +153,5 @@ public class UsuarioService {
 			ex.printStackTrace();
 			return Response.serverError().build();
 		}		
-	}
-	@POST
-	@Path("logIn")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response logIn() {
-		return null;
 	}
 }

@@ -119,8 +119,7 @@ $('#formActualizarPuntuacion').submit(function (e){
 		"fecha":Date.now(),
 		"identificacion":txtId.val(),
 		"nickname":nickname
-	});
-	console.log(json);
+	});	
 	$.ajax({
 		type: 'POST',
 		url: 'rest/usuarios/registrarPuntos',

@@ -153,6 +153,44 @@
 			<div class="row"></div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var json = JSON.stringify({
+			"nombres":"Dave",
+			"apellidos": "Bautista",
+			"email": "theanimalbatista@gmail.com",
+			"identificacion": "xxxxxxxxxx",
+			"nick:": "El Animal",
+			"clave": "IwalkAlone",
+			"activo": true,
+			"barrioId": 1
+		});
+		console.log(json);
+		$.ajax({
+			type: 'POST',
+			url: 'rest/usuarios/signIn',
+			contentType: 'application/json',
+			dataType: 'text',
+			data:json,
+			success: function(data){
+				$.toast({
+					heading: 'Éxito',
+					text: data,
+					icon: 'success',				
+					position: 'top-right',
+					hideAfter: 5000
+				});
+			},
+			error: function(jqXHR, status, error){
+				$.toast({
+					heading: 'Error',
+					text: status+":"+error,
+					icon: 'error',				
+					position: 'top-right',
+					hideAfter: 5000
+				});
+			}
+		})
+	</script>
 	<script src="./js/puntos_recoleccion.js"></script>
 	<script src="./js/puntuacion.js"></script>
 </body>
