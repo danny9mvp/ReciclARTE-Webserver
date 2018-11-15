@@ -67,6 +67,10 @@ public class UsuarioService {
 			propiedadesConexion.put(JDBC_URL, "jdbc:postgresql://"+JDBC_URI.getHost()+":"+JDBC_URI.getPort()+JDBC_URI.getPath());
 			propiedadesConexion.put(JDBC_USER, JDBC_URI.getUserInfo().split(":")[0]);
 			propiedadesConexion.put(JDBC_PASSWORD, JDBC_URI.getUserInfo().split(":")[1]);
+			propiedadesConexion.put(CONNECTION_POOL_INITIAL, "1");
+			propiedadesConexion.put(CONNECTION_POOL_MIN, "64");
+			propiedadesConexion.put(CONNECTION_POOL_MAX, "64");
+			propiedadesConexion.put(CACHE_STATEMENTS, "true");
 			propiedadesConexion.put(LOGGING_LEVEL, "FINE");
 			propiedadesConexion.put(LOGGING_TIMESTAMP, "false");
 			propiedadesConexion.put(LOGGING_THREAD, "false");
