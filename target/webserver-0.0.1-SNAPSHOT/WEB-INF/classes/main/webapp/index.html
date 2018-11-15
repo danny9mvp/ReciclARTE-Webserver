@@ -25,8 +25,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
+integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://openlayers.org/en/v5.2.0/css/ol.css" type="text/css">
+<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style>
 .map {
 	height: 400px;
@@ -41,9 +47,7 @@
 </style>
 <title>ReciclARTE Server</title>
 </head>
-<body>
-	<script
-		src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
+<body>	
 	<div class="container">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a id="puntosTab" class="nav-link active"
@@ -56,10 +60,8 @@
 				<div class="dropdown-menu">
 					<a id="puntosRecoleccionTab" class="dropdown-item"
 						data-toggle="tab" role="tab" aria-controls="tabPuntosRecoleccion"
-						aria-selected="false" href="#tabPuntosRecoleccion">Puntos de
-						recolección</a> <a id="rutasAseoTab" class="dropdown-item"
-						data-toggle="tab" role="tab" aria-controls="tabRutasAseo"
-						aria-selected="false" href="#tabRutasAseo">Rutas de aseo</a>
+						aria-selected="false" href="#tabPuntosRecoleccion">Jornadas, puntos de
+						recolección y rutas de aseo</a>
 				</div></li>
 		</ul>
 		<div class="tab-content">
@@ -72,7 +74,9 @@
 								<label for="txtId">Identificación</label> <input type="text"
 									id="txtId" class="form-control" required autofocus="autofocus" />
 							</fieldset>
-							<input type="submit" class="btn btn-success" value="Consultar" />
+							<button type="submit" class="btn btn-success">
+								<i class="fas fa-search"></i> Consultar
+							</button>
 						</form>
 					</div>
 					<div class="col-2"></div>
@@ -121,7 +125,9 @@
 										<option value="3">Enga y reciclamos</option>
 									</select>
 								</fieldset>
-								<input type="submit" class="btn btn-success" />
+								<button type="submit" class="btn btn-success">
+									<i class="fa fa-plus-circle"></i> Agregar
+								</button>								
 							</form>
 						</div>
 					</div>
@@ -150,33 +156,90 @@
 						<div id="containerFormResEv">
 							<form id="formResultadoEvaluacion">
 								<fieldset class="form-group">
-									<legend>Subir resultados de evaluación</legend>
-									<label for="spinnerPuntuacion">Puntuación obtenida: </label>
-									<input type="number" id="spinnerPuntuacion" class="form-control" min="0" step="10" value="0"/>
+									<legend>Resultados de evaluación</legend>
+									<label for="txtGoogleSheetId">Link de la hoja de datos de Google Forms: </label>
+									<input type="text" id="txtGoogleSheetId" class="form-control" required/>
+									<a href="#modalAyudaEvaluacion" rel="modal:open">¿Cómo obtener el ID de una hoja de datos de Google Forms?</a>
 								</fieldset>
-								<input type="submit" class="btn btn-success" value="Enviar"/> 
+								<button type="submit" class="btn btn-success">
+									<i class="fa fa-search"></i> Consultar 
+								</button> 
 							</form>
+							<div id="modalAyudaEvaluacion" class="modal">
+								<h2>Consultar hojas de datos de Google Forms</h2>
+								<ol>
+									<li>Abre la cuenta de Google donde tengas la hoja de datos de la evaluación.</li>
+									<li>
+										<p>Ve a Google Drive y busca el formulario de google.</p>
+										<img class="img-thumbnail" alt="Captura1.jpg" src="./img/Captura1.jpg"/>										
+									</li>
+									<li>
+										<p>Abre el formulario, ve a la pestaña de Respuestas y haz click en el ícono de hojas de cálculo.</p>
+										<img class="img-thumbnail" alt="Captura2.jpg" src="./img/Captura2.jpg"/>
+									</li>
+									<li>
+										<p>Una vez abierta la hoja de cálculo (hoja de datos) selecciona el texto que se encuentra entre
+										'/d/' y 'edit#...', cópialo ya que ese texto es el ID de nuestra hoja de datos.</p>
+										<img class="img-thumbnail" alt="Captura3.jpg" src="./img/Captura3.jpg"/>
+									</li>
+									<li>
+										<p>Pega el ID de la hoja de datos aquí y haz tu consulta. ¿Lo ves? facilísimo.</p>
+										<img class="img-thumbnail" alt="Captura4.jpg" src="./img/Captura4.jpg"/>
+									</li>
+								</ol>
+							</div>
 						</div>
 					</div>
-					<div class="col-7"></div>
+					<div class="col-5">
+						<table id="tablaRegistroEvaluacion" class="table table-striped">
+							<caption>Puntos por presentar evaluaciones</caption>
+							<thead class="thread-light">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Fecha de presentación</th>
+									<th scope="col">Calificación</th>									
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div id="tabPuntosRecoleccion" class="tab-pane fade" role="tabpanel"
 				aria-labelledby="puntosRecoleccionTab">
 				<div class="row my-4">
-					<h2>Puntos de recolección</h2>
-					<p>Haga clic en cualquier punto del mapa para agregar un marcador, una vez seleccionada(s) la(s) ubicación(es)
-					para el/los punto(s) de recolección, haga click en el botón <span class="badge badge-success">Enviar</span>.</p>
-					<div id="map" class="map"></div>
+					<h2>Jornadas, puntos de recolección y rutas de aseo</h2>					
+					<div id="map" class="map"></div>					
 				</div>
-			</div>
-			<div id="tabRutasAseo" class="tab-pane fade" role="tabpanel"
-				aria-labelledby="rutasAseoTab">
-				<div class="row my-4"></div>
+				<div class="row my-2">
+					<img style="float:left;max-width:32px;max-height:32px" alt="punto_recoleccion.png" src="./ico/punto_recoleccion.png">
+					<p style="clear:both;">Simboliza un punto de recolección de reciclaje.</p>
+				</div>
+				<div class="row my-2">
+					<img style="float:left;max-width:32px;max-height:32px" alt="jornada_recoleccion.png" src="./ico/jornada_recoleccion.png">
+					<p style="clear:both;">Simboliza una jornada de recolección activa.</p>
+				</div>	
+				<div class="row my-2">
+					<canvas id="lineaRuta" width="32" height="32" style="float:left;"></canvas>
+					<p style="clear:both;">Simboliza la ruta de aseo, transita los lunes, miércoles y viernes.</p>
+				</div>	
 			</div>
 			<div class="row"></div>
 		</div>
-	</div>
+	</div>	
+	<script src="./js/puntos_recoleccion.js"></script>
+	<script src="./js/puntuacion.js"></script>
+	<script>
+		var c = document.getElementById("lineaRuta");
+		var ctx = c.getContext("2d");
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.lineTo(32, 0);
+		ctx.lineWidth = 8;
+		ctx.strokeStyle = "#0f0";
+		ctx.stroke();
+	</script>
 	<!-- 
 	<script type="text/javascript">
 		var json = JSON.stringify({
@@ -217,7 +280,5 @@
 		})
 	</script>
 	 -->
-	<script src="./js/puntos_recoleccion.js"></script>
-	<script src="./js/puntuacion.js"></script>
 </body>
 </html>

@@ -3,7 +3,9 @@
  */
 var nickname;
 var txtId = $('#txtId');
+var googleSheetId = $('#txtGoogleSheetId');
 $('#tablaDatosUsuario').hide();
+$('#tablaRegistroEvaluacion').hide();
 $('#tablaRegistroPuntos').hide();
 $('#containerFormAP').hide();
 $('#containerFormResEv').hide();
@@ -13,6 +15,7 @@ $('#formBuscarUsuario').submit(function (e){
 	e.preventDefault();		
 	tablaDatosUsuario.empty();
 	tablaRegistroPuntos.empty();
+	$('#tablaRegistroEvaluacion tbody').empty();
 	$.ajax({
 		type: 'GET',
 		dataType: 'json',
@@ -44,7 +47,7 @@ $('#formBuscarUsuario').submit(function (e){
 				type:'GET',
 				dataType: 'json',
 				url: 'rest/usuarios/registroReciclaje/'+txtId.val(),				
-				success: function(data){
+				success: function(data){					
 					$.each(data, function(key, value){						
 						$.each(value, function(i, obj){							
 							tablaRegistroPuntos.append('<tr>'
@@ -73,22 +76,13 @@ $('#formBuscarUsuario').submit(function (e){
 				hideAfter: 5000
 			});						
 			console.log('response:'+data);
-			$.ajax({
-				type: 'GET',
-				url: 'rest/usuarios/evaluacionPuntuacion/'+txtId.val(),
-				dataType: 'json',
-				success: function(data){
-					console.log(data);
-				},
-				error: function(jqXHR, status, error){
-					console.log(status+":"+error);
-				}
-			});
 		},
 		error: function(jqXHR, status, error){
 			$('#tablaDatosUsuario').hide();
 			$('#tablaRegistroPuntos').hide();
 			$('#containerFormAP').hide();
+			$('#containerFormResEv').hide();
+			$('#tablaRegistroEvaluacion').empty();
 			$.toast({
 				heading: 'Error',
 				text: 'Estado:'+status,
@@ -178,42 +172,37 @@ $('#formActualizarPuntuacion').submit(function (e){
 		}
 	});
 });
-
 $('#formResultadoEvaluacion').submit(function(e){
 	e.preventDefault();
-	var archivo= new FormData($("#formResultadoEvaluacion"));
+	$('#tablaRegistroEvaluacion tbody').empty();
+	var json = JSON.stringify({
+		"identificacion": $('#txtId').val(),
+		"nick": nickname,
+		"googleSheet": $('#txtGoogleSheetId').val()
+	});
+	console.log(json);
 	$.ajax({
 		type: 'POST',
 		url: 'rest/usuarios/evaluacionPuntuacion',
-		contentType: 'json',
-		data: archivo,
 		dataType: 'json',
+		contentType: 'application/json',
+		data: json,
 		success: function(data){
-			$.toast({
-				heading: 'Éxito',
-				text: 'Puntuación por evaluación actualizada.',
-				icon: 'success',				
-				position: 'top-right',
-				hideAfter: 5000
-			});
-			var puntos=data.puntos;
-			$('#tablaDatosUsuario').each(function(){
-				var celda=$(this).find('td').eq(4);
-				var nuevoPuntaje = parseFloat(celda.text()) + puntos;
-				console.log(puntos);
-				celda.text(nuevoPuntaje);
+			console.log(data);
+			$('#tablaRegistroEvaluacion').show();
+			$(data).each(function(){
+			$('#tablaRegistroEvaluacion tbody').append(
+					'<tr>'+'<td>'+this.indice+'</td>'+'<td>'+this.fecha+'</td>'+'<td>'+this.puntuacion+'</td>'+'</tr>');
 			});
 		},
 		error: function(jqXHR, status, error){
 			$.toast({
 				heading: 'Error',
-				text: 'Error: '+error,
+				text: "El usuario seleccionado aún no ha realizado la prueba.",
 				icon: 'error',				
 				position: 'top-right',
 				hideAfter: 5000
 			});
-		},
-		cache: false,
-		processData: false
+		}
 	});
 });
