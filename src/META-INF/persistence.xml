@@ -18,10 +18,6 @@
     <class>com.entities.CoordenadasRutasRecoleccion</class>
     <class>com.entities.CoordenadasJornadasRecoleccion</class>    
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/d68sa6pipar8d0?sslmode=require"/>
-      <property name="javax.persistence.jdbc.user" value="rzwtmretrezzfl"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="6aa9f92cb8db692b8199c53ed26e51add416e5ffb2c5cbb863b3322cf69bb77c"/>
     </properties>
   </persistence-unit>
 </persistence>
