@@ -158,8 +158,7 @@ public class UsuarioService {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("RECICLAJE_PU", propiedadesConexion);
 		EntityManager em = emf.createEntityManager();
 		List<RankingPuntos> ranking = em.createNamedQuery("RankingPuntos.findAll").getResultList();
-		return Response.ok().entity(ranking).header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
+		return Response.ok().entity(ranking).build();
 	}
 	@GET
 	@Path("/registroReciclaje/{identificacion}")
