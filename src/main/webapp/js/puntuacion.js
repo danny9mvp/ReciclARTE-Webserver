@@ -74,8 +74,7 @@ $('#formBuscarUsuario').submit(function (e){
 				icon: 'success',
 				position: 'top-right',
 				hideAfter: 5000
-			});						
-			console.log('response:'+data);
+			});									
 		},
 		error: function(jqXHR, status, error){
 			$('#tablaDatosUsuario').hide();
@@ -152,8 +151,7 @@ $('#formActualizarPuntuacion').submit(function (e){
 			});
 			$('#tablaDatosUsuario').each(function(){				
 				var celda=$(this).find('td').eq(4);
-				var nuevoPuntaje= parseFloat(celda.text()) + parseFloat(peso)/10;
-				console.log(peso);
+				var nuevoPuntaje= parseFloat(celda.text()) + parseFloat(peso)/10;				
 				celda.text(nuevoPuntaje);
 			});			
 				tablaRegistroPuntos.append('<tr>'
@@ -179,16 +177,14 @@ $('#formResultadoEvaluacion').submit(function(e){
 		"identificacion": $('#txtId').val(),
 		"nick": nickname,
 		"googleSheet": $('#txtGoogleSheetId').val()
-	});
-	console.log(json);
+	});	
 	$.ajax({
 		type: 'POST',
 		url: 'rest/usuarios/evaluacionPuntuacion',
 		dataType: 'json',
 		contentType: 'application/json',
 		data: json,
-		success: function(data){
-			console.log(data);
+		success: function(data){			
 			$('#tablaRegistroEvaluacion').show();
 			$(data).each(function(){
 			$('#tablaRegistroEvaluacion tbody').append(
