@@ -12,7 +12,11 @@
     <class>com.entities.JornadaLimpiezaRecoleccion</class>
     <class>com.entities.TipoMaterial</class>
     <class>com.entities.Coordenada</class>
-    <class>com.entities.RankingPuntos</class>    
+    <class>com.entities.RankingPuntos</class>
+    <class>com.entities.EvaluacionRealizada</class>
+    <class>com.entities.GoogleSheets</class>
+    <class>com.entities.CoordenadasRutasRecoleccion</class>
+    <class>com.entities.CoordenadasJornadasRecoleccion</class>    
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/reciclaje"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

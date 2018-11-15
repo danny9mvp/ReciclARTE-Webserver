@@ -19,6 +19,12 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/jquery.toast.min.css" />
 <script src="./js/jquery.toast.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
 <link rel="stylesheet"
 	href="https://openlayers.org/en/v5.2.0/css/ol.css" type="text/css">
 <style>
@@ -26,17 +32,23 @@
 	height: 400px;
 	width: 100%;
 }
+.table-wrapper-scroll-y {
+  display: block;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 </style>
 <title>ReciclARTE Server</title>
 </head>
 <body>
 	<script
-	src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
+		src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
 	<div class="container">
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item"><a id="puntosTab" class="nav-link active"
 				data-toggle="tab" role="tab" aria-controls="tabPuntuacion"
-				aria-selected="true" href="#tabPuntuacion">Actualizar puntuación</a></li>
+				aria-selected="true" href="#tabPuntuacion">Puntuación</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 				aria-haspopup="true" role="button" aria-expanded="false"> Mapas
@@ -58,9 +70,9 @@
 						<form id="formBuscarUsuario">
 							<fieldset class="form-group">
 								<label for="txtId">Identificación</label> <input type="text"
-									id="txtId" class="form-control" required autofocus="autofocus"/>
+									id="txtId" class="form-control" required autofocus="autofocus" />
 							</fieldset>
-							<input type="submit" class="btn btn-success" value="Consultar"/>
+							<input type="submit" class="btn btn-success" value="Consultar" />
 						</form>
 					</div>
 					<div class="col-2"></div>
@@ -83,51 +95,79 @@
 				</div>
 				<hr>
 				<div class="row my-4">
-					<div class="col-3"></div>
+					<div class="col-2"></div>
 					<div class="col-3">
 						<div id="containerFormAP">
-						<form id="formActualizarPuntuacion">							
-							<fieldset class="form-group">
-								<legend>Actualizar puntuación</legend>
-								<div role="alert">
-									<span id="resultado"></span>
-								</div>
-								<label for="selectMaterial">Material:</label>
-								<select id="selectMaterial" name="material" class="form-control">
-									<option value="1">Papel</option>
-									<option value="2">Vidrio</option>
-									<option value="3">Textil</option>
-									<option value="4">Metal</option>
-									<option value="5">Plástico</option>
-								</select>
-								<label for="spinnerPeso">Peso:</label>
-								<input id="spinnerPeso" name="peso" type="number" class="form-control" min="1000" step=".01"/>
-							</fieldset>
-							<input type="submit" class="btn btn-success" />
-						</form>
+							<form id="formActualizarPuntuacion">
+								<fieldset class="form-group">
+									<legend>Puntuación por reciclar</legend>
+									<div role="alert">
+										<span id="resultado"></span>
+									</div>
+									<label for="selectMaterial">Material:</label> <select
+										id="selectMaterial" name="material" class="form-control">
+										<option value="1">Papel</option>
+										<option value="2">Vidrio</option>
+										<option value="3">Textil</option>
+										<option value="4">Metal</option>
+										<option value="5">Plástico</option>
+									</select> <label for="spinnerPeso">Peso (gramos):</label> <input id="spinnerPeso"
+										name="peso" type="number" class="form-control" min="1000"
+										step=".01" value="1000"/> <label for="selectPuntoRec">Punto de
+										recolección</label> <select id="selectPuntoRec" name="puntorec"
+										class="form-control">
+										<option value="1">Save the world</option>
+										<option value="2">Im yours</option>
+										<option value="3">Enga y reciclamos</option>
+									</select>
+								</fieldset>
+								<input type="submit" class="btn btn-success" />
+							</form>
 						</div>
 					</div>
-					<div class="col-4">
-						<table id="tablaRegistroPuntos" class="table">
-							<caption>Registro de puntos</caption>
+					<div class="col-7">
+						<table id="tablaRegistroPuntos" class="table table-striped table-wrapper-scroll-y">
+							<caption>Puntos por reciclar</caption>
 							<thead class="thread-light">
 								<tr>
+									<th scope="col">#</th>
 									<th scope="col">Material</th>
-									<th scope="col">Peso</th>
-								</tr>	
+									<th scope="col">Peso (gramos)</th>
+									<th scope="col">Puntos obtenidos</th>
+									<th scope="col">Fecha de medición</th>
+									<th scope="col">Punto de recolección</th>
+								</tr>
 							</thead>
 							<tbody>
 							</tbody>
 						</table>
 					</div>
-					<div class="col-2"></div>
+				</div>
+				<hr>				
+				<div class="row my-4">				
+					<div class="col-2"></div>					
+					<div class="col-5">
+						<div id="containerFormResEv">
+							<form id="formResultadoEvaluacion">
+								<fieldset class="form-group">
+									<legend>Subir resultados de evaluación</legend>
+									<label for="spinnerPuntuacion">Puntuación obtenida: </label>
+									<input type="number" id="spinnerPuntuacion" class="form-control" min="0" step="10" value="0"/>
+								</fieldset>
+								<input type="submit" class="btn btn-success" value="Enviar"/> 
+							</form>
+						</div>
+					</div>
+					<div class="col-7"></div>
 				</div>
 			</div>
 			<div id="tabPuntosRecoleccion" class="tab-pane fade" role="tabpanel"
 				aria-labelledby="puntosRecoleccionTab">
 				<div class="row my-4">
 					<h2>Puntos de recolección</h2>
-					<div id="map" class="map"></div>				
+					<p>Haga clic en cualquier punto del mapa para agregar un marcador, una vez seleccionada(s) la(s) ubicación(es)
+					para el/los punto(s) de recolección, haga click en el botón <span class="badge badge-success">Enviar</span>.</p>
+					<div id="map" class="map"></div>
 				</div>
 			</div>
 			<div id="tabRutasAseo" class="tab-pane fade" role="tabpanel"
@@ -137,6 +177,46 @@
 			<div class="row"></div>
 		</div>
 	</div>
+	<!-- 
+	<script type="text/javascript">
+		var json = JSON.stringify({
+			"nombres":"Dave",
+			"apellidos": "Bautista",
+			"email": "theanimalbatista@gmail.com",
+			"identificacion": "xxxxxxxxxx",
+			"nick:": "El Animal",
+			"clave": "IwalkAlone",
+			"activo": true,
+			"barrioId": 1
+		});
+		console.log(json);
+		$.ajax({
+			type: 'POST',
+			url: 'rest/usuarios/signIn',
+			contentType: 'application/json',
+			dataType: 'text',
+			data:json,
+			success: function(data){
+				$.toast({
+					heading: 'Éxito',
+					text: data,
+					icon: 'success',				
+					position: 'top-right',
+					hideAfter: 5000
+				});
+			},
+			error: function(jqXHR, status, error){
+				$.toast({
+					heading: 'Error',
+					text: status+":"+error,
+					icon: 'error',				
+					position: 'top-right',
+					hideAfter: 5000
+				});
+			}
+		})
+	</script>
+	 -->
 	<script src="./js/puntos_recoleccion.js"></script>
 	<script src="./js/puntuacion.js"></script>
 </body>

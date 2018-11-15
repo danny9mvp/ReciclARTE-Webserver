@@ -24,30 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RankingPuntos.findAll", query = "SELECT r FROM RankingPuntos r")
-    , @NamedQuery(name = "RankingPuntos.findById", query = "SELECT r FROM RankingPuntos r WHERE r.id = :id")
+    , @NamedQuery(name = "RankingPuntos.findByPuesto", query = "SELECT r FROM RankingPuntos r WHERE r.puesto = :puesto")
     , @NamedQuery(name = "RankingPuntos.findByNick", query = "SELECT r FROM RankingPuntos r WHERE r.nick = :nick")
-    , @NamedQuery(name = "RankingPuntos.findByPuntaje", query = "SELECT r FROM RankingPuntos r WHERE r.puntaje = :puntaje")})
+    , @NamedQuery(name = "RankingPuntos.findByPuntajetotal", query = "SELECT r FROM RankingPuntos r WHERE r.puntajetotal = :puntajetotal")})
 public class RankingPuntos implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Column(name = "puesto")
+    private BigInteger puesto;
     @Id
-    @Column(name = "id")
-    private BigInteger id;
     @Column(name = "nick")
     private String nick;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "puntaje")
-    private Float puntaje;
+    @Column(name = "puntajetotal")
+    private Float puntajetotal;
 
     public RankingPuntos() {
     }
 
-    public BigInteger getId() {
-        return id;
+    public BigInteger getPuesto() {
+        return puesto;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setPuesto(BigInteger puesto) {
+        this.puesto = puesto;
     }
 
     public String getNick() {
@@ -58,12 +58,12 @@ public class RankingPuntos implements Serializable {
         this.nick = nick;
     }
 
-    public Float getPuntaje() {
-        return puntaje;
+    public Float getPuntajetotal() {
+        return puntajetotal;
     }
 
-    public void setPuntaje(Float puntaje) {
-        this.puntaje = puntaje;
+    public void setPuntajetotal(Float puntajetotal) {
+        this.puntajetotal = puntajetotal;
     }
     
 }

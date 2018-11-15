@@ -3,19 +3,23 @@
  */
 var nickname;
 var txtId = $('#txtId');
+var googleSheetId = $('#txtGoogleSheetId');
 $('#tablaDatosUsuario').hide();
+$('#tablaRegistroEvaluacion').hide();
 $('#tablaRegistroPuntos').hide();
 $('#containerFormAP').hide();
+$('#containerFormResEv').hide();
 var tablaDatosUsuario= $('#tablaDatosUsuario tbody');
 var tablaRegistroPuntos = $('#tablaRegistroPuntos tbody');
 $('#formBuscarUsuario').submit(function (e){	
 	e.preventDefault();		
 	tablaDatosUsuario.empty();
 	tablaRegistroPuntos.empty();
+	$('#tablaRegistroEvaluacion tbody').empty();
 	$.ajax({
 		type: 'GET',
 		dataType: 'json',
-		url: 'rest/usuarios/'+txtId.val(),
+		url: 'rest/usuarios/getUsuario/'+txtId.val(),
 		done: function(){
 			$.toast({
 				heading: 'Información',
@@ -32,6 +36,7 @@ $('#formBuscarUsuario').submit(function (e){
 				$('#tablaDatosUsuario').show();
 				$('#tablaRegistroPuntos').show();
 				$('#containerFormAP').show();
+				$('#containerFormResEv').show();
 				tablaDatosUsuario.append('<tr>'
 						+'<td>'+this.nombres+'</td>'+'<td>'+this.apellidos+'</td>'
 						+'<td>'+this.nickname+'</td>'+'<td>'+this.barrio+'</td>'
@@ -41,11 +46,10 @@ $('#formBuscarUsuario').submit(function (e){
 			$.ajax({
 				type:'GET',
 				dataType: 'json',
-				url: 'rest/usuarios/obtenerRegistroPuntos/'+txtId.val(),				
-				success: function(data){
+				url: 'rest/usuarios/registroReciclaje/'+txtId.val(),				
+				success: function(data){					
 					$.each(data, function(key, value){						
-						$.each(value, function(i, obj){
-							console.log(obj);
+						$.each(value, function(i, obj){							
 							tablaRegistroPuntos.append('<tr>'
 									+'<td>'+obj.id+'</td>'+'<td>'+obj.material+'</td>'
 									+'<td>'+obj.peso.toFixed(2)+'</td>'+'<td>'+obj.puntuacion+'</td>'
@@ -71,12 +75,14 @@ $('#formBuscarUsuario').submit(function (e){
 				position: 'top-right',
 				hideAfter: 5000
 			});						
-			console.log('response:'+data);			
+			console.log('response:'+data);
 		},
 		error: function(jqXHR, status, error){
 			$('#tablaDatosUsuario').hide();
 			$('#tablaRegistroPuntos').hide();
 			$('#containerFormAP').hide();
+			$('#containerFormResEv').hide();
+			$('#tablaRegistroEvaluacion').empty();
 			$.toast({
 				heading: 'Error',
 				text: 'Estado:'+status,
@@ -159,6 +165,40 @@ $('#formActualizarPuntuacion').submit(function (e){
 			$.toast({
 				heading: 'Error',
 				text: 'Error: '+error,
+				icon: 'error',				
+				position: 'top-right',
+				hideAfter: 5000
+			});
+		}
+	});
+});
+$('#formResultadoEvaluacion').submit(function(e){
+	e.preventDefault();
+	$('#tablaRegistroEvaluacion tbody').empty();
+	var json = JSON.stringify({
+		"identificacion": $('#txtId').val(),
+		"nick": nickname,
+		"googleSheet": $('#txtGoogleSheetId').val()
+	});
+	console.log(json);
+	$.ajax({
+		type: 'POST',
+		url: 'rest/usuarios/evaluacionPuntuacion',
+		dataType: 'json',
+		contentType: 'application/json',
+		data: json,
+		success: function(data){
+			console.log(data);
+			$('#tablaRegistroEvaluacion').show();
+			$(data).each(function(){
+			$('#tablaRegistroEvaluacion tbody').append(
+					'<tr>'+'<td>'+this.indice+'</td>'+'<td>'+this.fecha+'</td>'+'<td>'+this.puntuacion+'</td>'+'</tr>');
+			});
+		},
+		error: function(jqXHR, status, error){
+			$.toast({
+				heading: 'Error',
+				text: "El usuario seleccionado aún no ha realizado la prueba.",
 				icon: 'error',				
 				position: 'top-right',
 				hideAfter: 5000
