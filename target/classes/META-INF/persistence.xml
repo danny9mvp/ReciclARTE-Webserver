@@ -18,7 +18,7 @@
     <class>com.entities.CoordenadasRutasRecoleccion</class>
     <class>com.entities.CoordenadasJornadasRecoleccion</class>    
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://rzwtmretrezzfl:6aa9f92cb8db692b8199c53ed26e51add416e5ffb2c5cbb863b3322cf69bb77c@ec2-23-21-147-71.compute-1.amazonaws.com:5432/d68sa6pipar8d0"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://rzwtmretrezzfl:6aa9f92cb8db692b8199c53ed26e51add416e5ffb2c5cbb863b3322cf69bb77c@ec2-23-21-147-71.compute-1.amazonaws.com:5432/d68sa6pipar8d0?sslmode=require"/>
       <property name="javax.persistence.jdbc.user" value="rzwtmretrezzfl"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="6aa9f92cb8db692b8199c53ed26e51add416e5ffb2c5cbb863b3322cf69bb77c"/>
