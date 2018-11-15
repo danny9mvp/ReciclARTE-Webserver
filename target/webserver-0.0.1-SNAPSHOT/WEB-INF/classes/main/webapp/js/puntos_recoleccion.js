@@ -50,8 +50,7 @@ $('#puntosRecoleccionTab').click(function(){
 		type: 'GET',
 		url: 'rest/mapas/puntosRecoleccion',
 		dataType: 'json',
-		success: function(data){
-			console.log(data);
+		success: function(data){			
 			$.each(data, function(key, value){					
 					var marcador = new ol.Feature({
 						geometry: new ol.geom.Point(ol.proj.fromLonLat([value.longitud,value.latitud]))						
@@ -92,8 +91,7 @@ $('#puntosRecoleccionTab').click(function(){
 		type:'GET',
 		url: 'rest/mapas/jornadasRecoleccion',
 		dataType: 'json',
-		success: function(data){
-			console.log(data);
+		success: function(data){			
 			$.each(data, function(key, value){
 				var marcador = new ol.Feature({
 					geometry: new ol.geom.Point(ol.proj.fromLonLat([value.longitud,value.latitud])),

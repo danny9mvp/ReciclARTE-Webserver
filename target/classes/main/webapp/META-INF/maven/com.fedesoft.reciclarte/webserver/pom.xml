@@ -95,7 +95,12 @@
 		    <artifactId>google-api-services-sheets</artifactId>
 		    <version>v4-rev550-1.25.0</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.thetransactioncompany/cors-filter -->
+		<dependency>
+		    <groupId>com.thetransactioncompany</groupId>
+		    <artifactId>cors-filter</artifactId>
+		    <version>2.6</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>${basedir}/src</sourceDirectory>

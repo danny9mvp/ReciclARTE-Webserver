@@ -52,8 +52,7 @@ public class SesionService {
 				json.put("nick", nick);
 				json.put("puntos", puntos);
 				callLogin.close();					
-				return Response.ok(json.toString()).header("Access-Control-Allow-Origin", "*")
-						.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
+				return Response.ok(json.toString()).build();
 					
 		}catch(Exception ex) {
 			ex.printStackTrace();
@@ -74,7 +73,6 @@ public class SesionService {
 		em.getTransaction().begin();
 		em.persist(usuario);
 		em.getTransaction().commit();
-		return Response.ok("Se ha completado su registro satisfactoriamente.").header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
+		return Response.ok("Se ha completado su registro satisfactoriamente.").build();
 	}
 }
