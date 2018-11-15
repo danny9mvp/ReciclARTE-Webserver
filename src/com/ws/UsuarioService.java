@@ -154,11 +154,12 @@ public class UsuarioService {
 	@GET
 	@Path("/ranking")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<RankingPuntos> getRanking() {
+	public Response getRanking() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("RECICLAJE_PU", propiedadesConexion);
 		EntityManager em = emf.createEntityManager();
 		List<RankingPuntos> ranking = em.createNamedQuery("RankingPuntos.findAll").getResultList();
-		return ranking;
+		return Response.ok().entity(ranking).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
 	}
 	@GET
 	@Path("/registroReciclaje/{identificacion}")

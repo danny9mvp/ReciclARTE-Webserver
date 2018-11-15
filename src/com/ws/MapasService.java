@@ -56,19 +56,21 @@ public class MapasService {
 	@GET
 	@Path("/puntosRecoleccion")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CoordenadasRutasRecoleccion> getPuntosRecoleccion() {
+	public Response getPuntosRecoleccion() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("RECICLAJE_PU", propiedadesConexion);
 		EntityManager em = emf.createEntityManager();
 		List<CoordenadasRutasRecoleccion> coordenadasRutasRecoleccion = em.createNamedQuery("CoordenadasRutasRecoleccion.findAll").getResultList();
-		return coordenadasRutasRecoleccion;
+		return Response.ok().entity(coordenadasRutasRecoleccion).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
 	}
 	@GET
 	@Path("/jornadasRecoleccion")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CoordenadasJornadasRecoleccion> getJornadasRecoleccion(){
+	public Response getJornadasRecoleccion(){
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("RECICLAJE_PU", propiedadesConexion);
 		EntityManager em = emf.createEntityManager();
 		List<CoordenadasJornadasRecoleccion> coordenadasJornadasRecoleccion = em.createNamedQuery("CoordenadasJornadasRecoleccion.findAll").getResultList();
-		return coordenadasJornadasRecoleccion;
+		return Response.ok().entity(coordenadasJornadasRecoleccion).header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
 	}
 }
