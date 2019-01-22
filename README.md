@@ -1,4 +1,4 @@
-#ReciclARTE webserver
+# ReciclARTE webserver
 
 Es el componente servidor diseñado para abastecer a la aplicación móvil de ReciclARTE.
 Fue desarrollado en el lenguaje de programación Java y funciona como proveedor de
